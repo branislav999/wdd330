@@ -6,7 +6,7 @@ export default async function productList(selector){
     
         const data = await getData();
 
-        renderList(selector, data);
+        renderListWithTemplate(productCardTemplate, selector, data);
 
 
     } catch (e) {
@@ -29,14 +29,14 @@ function productCardTemplate(product) {
     </li>`
 }
 
-function renderList(selector, list) {
+function renderListWithTemplate(templateFunction, selector, list, position = "beforeend", clear = true) {
 
     const elem = document.querySelector(selector);
 
     const filteredList = list.filter(product => product.Id !== "989CG" && product.Id !== "880RT");
 
-    const toRender = filteredList.map(productCardTemplate);
+    const toRender = filteredList.map(templateFunction);
 
-    elem.insertAdjacentHTML("beforeend",toRender.join(""));
+    elem.insertAdjacentHTML(position,toRender.join(""));
 
 }
